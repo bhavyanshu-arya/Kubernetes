@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-deployment-persistent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database-deployment-persistent
+  template:
+    metadata:
+      labels:
+        app: database-deployment-persistent
+    spec:
+      containers:
+        - name: database
+          image: gcr.io/kubernetes-389110/nagp-app-database:latest
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-secret
+                  key: password
+          volumeMounts:
+            - name: data-volume
+              mountPath: /var/lib/mysql
+          ports:
+            - containerPort: 3306
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: nagp-database-persistent
+
+            
+

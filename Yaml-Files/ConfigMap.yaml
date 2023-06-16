@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+data:
+  dbConfig.json: |-
+    {
+      "host": "nagp-database-service.default.svc.cluster.local",
+      "port": 3306,
+      "user": "root",
+      "database": "EmployeeDetails"
+    }

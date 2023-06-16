@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nagp-app-node
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nagp-app-node
+  strategy:
+      type: RollingUpdate
+      rollingUpdate:
+       maxSurge: 1
+       maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: nagp-app-node
+    spec:
+      containers:
+        - name: nagp-app-node
+          image: gcr.io/kubernetes-389110/nagp-app-node:latest
+          ports:
+            - containerPort: 3010
+          
